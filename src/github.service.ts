@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 
@@ -10,7 +10,7 @@ export class GithubService {
 
   async getCommitHistory(owner: string, repo: string) {
     if (owner == null || repo == null || owner.trim().length == 0 || repo.trim().length == 0) {
-      throw new Error(`Parameters are missing, you need to send both owner and repository name. owner:"${owner}", repo:"${repo}"`);
+      throw new NotFoundException(`Parameters are missing, you need to send both owner and repository name. owner:"${owner}", repo:"${repo}"`);
     }
 
     try {
@@ -22,7 +22,7 @@ export class GithubService {
       const response = await axios.get(`${this.githubAPIBaseURL}/repos/${owner}/${repo}/commits`, { headers });
       return response.data;
     } catch(error) {
-      throw new Error(`Error while fetching commit history for owner:"${owner}" and repo:"${repo}". message:"${error.message}"`);
+      throw new NotFoundException(`Error while fetching commit history for owner:"${owner}" and repo:"${repo}". message:"${error.message}"`);
     }
   }
 }
