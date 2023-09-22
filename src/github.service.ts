@@ -26,7 +26,7 @@ export class GithubService {
       } 
       throw new NotFoundException(`There are no entries in commit history for owner:"${owner}" and repo:"${repo}".`);
     } catch(error) {
-      throw new InternalServerErrorException('Error while fetching commit history for owner:"${owner}" and repo:"${repo}"');
+      throw new InternalServerErrorException(`Error while fetching commit history for owner:"${owner}" and repo:"${repo}"`);
     }
   }
 }
